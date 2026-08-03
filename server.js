@@ -29,7 +29,11 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL, 'http://localhost:5173'] : '*',
+  origin: [
+    'https://dreamtrail-frontend.vercel.app', 
+    'http://localhost:5173',
+    "https://dreamtrail-frontend-4y319slij-dreamtrail1.vercel.app"
+  ],
   credentials: true
 }));
 app.use(express.json());
