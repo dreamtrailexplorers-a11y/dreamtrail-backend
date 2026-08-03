@@ -1,0 +1,6 @@
+import mongoose from 'mongoose';
+mongoose.connect('mongodb://127.0.0.1:27017/dreamtrail').then(async () => {
+  const r = await mongoose.connection.db.collection('enquiries').find().sort({createdAt:-1}).limit(1).toArray();
+  console.log(r);
+  process.exit(0);
+});
