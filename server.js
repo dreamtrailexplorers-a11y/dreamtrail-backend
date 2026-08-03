@@ -79,6 +79,10 @@ app.use('/api/subscribers', subscriberRoutes);
 // Serve static files from uploads folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.get('/', (req, res) => {
+  res.send('DreamTrail Backend API is running!');
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'DreamTrail Travel Server is running' });
 });
