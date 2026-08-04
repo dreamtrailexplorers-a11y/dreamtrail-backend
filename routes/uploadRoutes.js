@@ -1,7 +1,6 @@
 import express from 'express';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 const router = express.Router();
 
@@ -12,36 +11,36 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET 
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'dreamtrail_uploads',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp']
-  }
-});
-
+// Use memory storage to avoid read-only file system issues on Vercel
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // POST /api/upload
-router.post('/', (req, res) => {
-  upload.single('file')(req, res, function (err) {
-    if (err) {
-      console.error("Upload error:", err);
-      return res.status(500).json({ 
-        message: 'Image upload failed on server', 
-        error: err.message || err 
-      });
-    }
-    
+router.post('/', upload.single('file'), async (req, res) => {
+  try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
+
+    // Convert buffer to base64 string
+    const b64 = Buffer.from(req.file.buffer).toString('base64');
+    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+    
+    // Upload directly to Cloudinary using base64
+    const result = await cloudinary.uploader.upload(dataURI, {
+      folder: 'dreamtrail_uploads',
+    });
     
     // Return the direct Cloudinary URL
-    const fileUrl = req.file.path;
-    
-    res.json({ url: fileUrl });
-  });
+    res.json({ url: result.secure_url });
+
+  } catch (error) {
+    console.error("Cloudinary Upload Error:", error);
+    res.status(500).json({ 
+      message: 'Image upload failed on server', 
+      error: error.message || error
+    });
+  }
 });
 
 export default router;
