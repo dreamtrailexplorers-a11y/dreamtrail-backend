@@ -5,16 +5,22 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path to the service account key file
-const KEYFILEPATH = path.join(__dirname, '../googleDrive.json');
-
-// Define the scopes
+// Parse credentials from Environment Variable (for Vercel) or fallback to local file
 const SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive'];
-
-const auth = new google.auth.GoogleAuth({
-  keyFile: KEYFILEPATH,
-  scopes: SCOPES,
-});
+let auth;
+if (process.env.GOOGLE_DRIVE_CREDENTIALS) {
+  const credentials = JSON.parse(process.env.GOOGLE_DRIVE_CREDENTIALS);
+  auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: SCOPES,
+  });
+} else {
+  const KEYFILEPATH = path.join(__dirname, '../googleDrive.json');
+  auth = new google.auth.GoogleAuth({
+    keyFile: KEYFILEPATH,
+    scopes: SCOPES,
+  });
+}
 
 export const drive = google.drive({ version: 'v3', auth });
 
