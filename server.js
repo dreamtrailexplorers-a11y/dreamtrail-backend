@@ -32,7 +32,8 @@ app.use(cors({
   origin: [
     'https://dreamtrail-frontend.vercel.app', 
     'http://localhost:5173',
-    "https://dreamtrail-frontend-4y319slij-dreamtrail1.vercel.app"
+    "https://dreamtrail-frontend-4y319slij-dreamtrail1.vercel.app",
+    "https://dreamtrail-frontend-bu6pcny0q-dreamtrail1.vercel.app"
   ],
   credentials: true
 }));
