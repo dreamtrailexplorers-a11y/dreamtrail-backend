@@ -72,6 +72,8 @@ const tripSchema = new mongoose.Schema({
     image: String
   }],
   inclusions: [{ type: String }],
+  mapImage: { type: String, default: '' },
+  tourHighlights: [{ type: String }],
   exclusions: [{ type: String }],
   amenities: [{ type: String }],
   aboutTrip: String,
@@ -94,12 +96,12 @@ const tripSchema = new mongoose.Schema({
     price: Number, // e.g. 10000 (discounted)
     originalPrice: Number, // e.g. 15000 (original)
     days: String,  // e.g. "8 Days 7 Nights"
-    image: String, // uploaded image URL
-    subOptions: [{ // e.g. "Room sharing", "Solo rider"
-      name: String,
-      price: Number,
-      originalPrice: Number
-    }]
+    image: String // uploaded image URL
+  }],
+
+  variants: [{
+    name: String, // e.g. "Solo Rider", "2 Sharing"
+    price: Number // e.g. 2000 (Add-on price)
   }],
   
   departureDates: [{
