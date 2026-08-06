@@ -5,15 +5,7 @@ const destinationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  startingPrice: {
-    type: Number,
-    required: true,
-  },
   image: {
-    type: String,
-    required: true,
-  },
-  tagline: {
     type: String,
     required: true,
   },
@@ -50,6 +42,10 @@ const destinationSchema = new mongoose.Schema({
   faqs: [{
     q: String,
     a: String
+  }],
+  whyChooseUs: [{
+    title: String,
+    description: String
   }],
   popularCities: [{ type: String }]
 }, { timestamps: true });

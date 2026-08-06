@@ -6,8 +6,8 @@ import NavLink from './models/NavLink.js';
 import SiteSettings from './models/SiteSettings.js';
 
 const seedNavLinks = [
-  { title: "Tour Packages", path: "/tour-packages", order: 1 },
-  { title: "Group Trips", path: "/group-trips", order: 2 },
+  { title: "Motorcycle Tours", path: "/tour-packages", order: 1 },
+  { title: "Group Tours", path: "/group-trips", order: 2 },
   { title: "Creator Trips", path: "/creator-trips", order: 3 }
 ];
 
@@ -123,9 +123,7 @@ const seedDestinations = [
     name: "Spiti Valley",
     slug: "spiti-valley",
     type: "domestic",
-    startingPrice: 15999,
     image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=600&q=80",
-    tagline: "The Middle Land",
     aboutText: "Spiti Valley is a cold desert mountain valley located high in the Himalayas.",
     handpickedHotels: [
       { title: "Kaza Eco Resort", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80", star: "4 Star Hotel", startPrice: "4,500" }
@@ -146,9 +144,7 @@ const seedDestinations = [
     name: "Bali",
     slug: "bali",
     type: "international",
-    startingPrice: 35000,
     image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
-    tagline: "Island of the Gods",
     aboutText: "Bali is an Indonesian island known for its forested volcanic mountains, iconic rice paddies, beaches and coral reefs.",
     handpickedHotels: [],
     curatedExperiences: [],

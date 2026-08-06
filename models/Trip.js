@@ -126,12 +126,12 @@ const tripSchema = new mongoose.Schema({
   
   // QUICK INFO FIELDS
   quickInfo: {
-    packingList: [{ type: String }],
-    bookFlight: [{ type: String }],
-    knowBeforeYouGo: [{ type: String }],
-    paymentPolicy: [{ type: String }],
-    termsAndConditions: [{ type: String }],
-    cancellationAndRefundPolicy: [{ type: String }]
+    packingList: [{ title: String, desc: String }],
+    bookFlight: [{ title: String, desc: String }],
+    knowBeforeYouGo: [{ title: String, desc: String }],
+    paymentPolicy: [{ title: String, desc: String }],
+    termsAndConditions: [{ title: String, desc: String }],
+    cancellationAndRefundPolicy: [{ title: String, desc: String }]
   },
   
   // CREATOR TRIP SPECIFIC FIELDS

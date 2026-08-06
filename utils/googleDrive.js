@@ -78,8 +78,8 @@ export const uploadToGoogleDrive = async (file, folderId) => {
       },
     });
 
-    // Generate the direct view link (thumbnail endpoint bypasses HTML preview)
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+    // Generate the direct view link (uc endpoint is better for hotlinking publicly shared images)
+    return `https://drive.google.com/uc?export=view&id=${fileId}`;
   } catch (error) {
     console.error('Error uploading to Google Drive:', error);
     throw error;
