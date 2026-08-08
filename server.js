@@ -41,31 +41,42 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Database Connection
+let isMemoryDbConnected = false;
+
+// Database Connection for Serverless (Vercel)
 const connectDB = async () => {
+  // Check if we have a connection to the database or if it's currently connecting
+  if (mongoose.connection.readyState === 1 || mongoose.connection.readyState === 2) {
+    return;
+  }
+
   let mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://localhost:27017/dreamtrail';
   
   try {
-    await mongoose.connect(mongoUri);
+    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
     console.log(`Connected to MongoDB (${mongoUri.includes('cluster') ? 'Atlas' : 'Local'})`);
-    // const { seedDB } = await import('./seed.js');
-    // await seedDB();
   } catch (err) {
-    console.log('MongoDB connection failed, falling back to In-Memory MongoDB...', err.message);
-    try {
-      const mongoServer = await MongoMemoryServer.create();
-      mongoUri = mongoServer.getUri();
-      await mongoose.connect(mongoUri);
-      console.log('Connected to In-Memory MongoDB');
-      // const { seedDB } = await import('./seed.js');
-      // await seedDB();
-    } catch (memErr) {
-      console.error('Failed to connect to In-Memory MongoDB:', memErr);
+    console.log('MongoDB connection failed:', err.message);
+    if (!isMemoryDbConnected) {
+      try {
+        console.log('Falling back to In-Memory MongoDB...');
+        const mongoServer = await MongoMemoryServer.create();
+        mongoUri = mongoServer.getUri();
+        await mongoose.connect(mongoUri);
+        isMemoryDbConnected = true;
+        console.log('Connected to In-Memory MongoDB');
+      } catch (memErr) {
+        console.error('Failed to connect to In-Memory MongoDB:', memErr);
+      }
     }
   }
 };
 
-connectDB();
+// Middleware to ensure DB connection on every request before hitting API routes
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 // API Routes
 app.use('/api/destinations', destinationRoutes);
