@@ -92,6 +92,7 @@ const siteSettingsSchema = new mongoose.Schema({
     
     whyChooseUsTitle: { type: String, default: 'WHY CHOOSE US FOR MOTORCYCLE TOURS' },
     whyChooseUsPoints: [{
+      title: { type: String, default: '' },
       text: { type: String, default: '' }
     }],
     
