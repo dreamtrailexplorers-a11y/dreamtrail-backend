@@ -4,6 +4,22 @@ const siteSettingsSchema = new mongoose.Schema({
   // Hero Section
   heroHeading: { type: String, default: 'Experiences for\nTourist Explorers' },
   heroImages: { type: [String], default: ['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80', 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1920&q=80'] },
+  heroSliders: {
+    type: [{
+      image: { type: String, default: '' },
+      heading: { type: String, default: '' }
+    }],
+    default: [
+      {
+        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80',
+        heading: 'Experiences for\nTourist Explorers'
+      },
+      {
+        image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1920&q=80',
+        heading: 'Experiences for\nTourist Explorers'
+      }
+    ]
+  },
   heroVideoUrl1: { type: String, default: 'https://assets.mixkit.co/videos/preview/mixkit-drone-view-of-a-mountain-road-41539-large.mp4' },
   heroVideoUrl2: { type: String, default: '' },
   
