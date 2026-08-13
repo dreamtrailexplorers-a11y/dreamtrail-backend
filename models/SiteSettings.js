@@ -71,6 +71,8 @@ const siteSettingsSchema = new mongoose.Schema({
     introText1: { type: String, default: 'We transform your motorcycle travel dream into reality...' },
     introTitle2: { type: String, default: 'Expanding Horizon' },
     introText2: { type: String, default: 'Our journey has expanded...' },
+      extraIntrosTitle: { type: String, default: 'Discover More' },
+      extraIntrosSubtitle: { type: String, default: 'Delve deeper into our vision, philosophy, and the journey that brought us here.' },
       extraIntros: {
         type: [{
           title: { type: String, default: '' },
