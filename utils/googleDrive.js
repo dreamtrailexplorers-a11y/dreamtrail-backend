@@ -32,15 +32,8 @@ export const drive = google.drive({ version: 'v3', auth: oauth2Client });
  */
 export const uploadToGoogleDrive = async (file, folderId) => {
   try {
-        console.log("🔥 uploadToGoogleDrive called");
+    console.log("uploadToGoogleDrive called");
     console.log("Folder ID:", folderId);
-
-  const folder = await drive.files.get({
-    fileId: folderId,
-    fields: "id,name,owners,parents",
-  });
-
-  console.log(folder.data);
 
     const { originalname, mimetype, buffer } = file;
 
