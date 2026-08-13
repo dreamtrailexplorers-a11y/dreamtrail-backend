@@ -78,8 +78,14 @@ export const uploadToGoogleDrive = async (file, folderId) => {
       },
     });
 
-    // Generate the direct view link using lh3 CDN for maximum stability
-    return `https://lh3.googleusercontent.com/d/${fileId}=w1000`;
+    // Generate the direct view link
+    if (mimetype && mimetype.startsWith('image/')) {
+      // Use lh3 CDN for maximum stability for images
+      return `https://lh3.googleusercontent.com/d/${fileId}=w1000`;
+    } else {
+      // Standard drive view link for PDFs and other files
+      return `https://drive.google.com/uc?export=view&id=${fileId}`;
+    }
   } catch (error) {
     console.error('Error uploading to Google Drive:', error);
     throw error;

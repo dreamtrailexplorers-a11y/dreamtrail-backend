@@ -67,6 +67,11 @@ const siteSettingsSchema = new mongoose.Schema({
       text: { type: String, default: '' }
     }],
     
+    whyChooseUsTitle: { type: String, default: 'WHY CHOOSE US FOR MOTORCYCLE TOURS' },
+    whyChooseUsPoints: [{
+      text: { type: String, default: '' }
+    }],
+    
     bannerTitle: { type: String, default: 'RIDE\nThat Stays With You Forever' },
     bannerSubtitle: { type: String, default: 'Experience the Euphoria of the open road...' },
     bannerImage: { type: String, default: '' }
@@ -86,6 +91,24 @@ const siteSettingsSchema = new mongoose.Schema({
   paymentDetailsContent: { type: String, default: 'Payment Options...' },
   
   // Footer
+  footerLinks: {
+    type: [{
+      label: { type: String, required: true },
+      url: { type: String, required: true }
+    }],
+    default: [
+      { label: 'Home', url: '/' },
+      { label: 'Motorcycle Tours', url: '/tour-packages' },
+      { label: 'Group Tours', url: '/group-trips' },
+      { label: 'Creator', url: '/creator-trips' },
+      { label: 'Careers', url: '/careers' },
+      { label: 'About Us', url: '/about' },
+      { label: 'Contact Us', url: '/contact' },
+      { label: 'Terms & Conditions', url: '/terms' },
+      { label: 'Privacy Policy', url: '/privacy' },
+      { label: 'Payment Details', url: '/payment' }
+    ]
+  },
   copyrightText: { type: String, default: '© 2026 DreamTrail Experiences Private Limited. All rights reserved.' },
 }, { timestamps: true });
 

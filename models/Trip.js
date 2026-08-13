@@ -41,6 +41,9 @@ const tripSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  pdfUrl: {
+    type: String, // URL to the uploaded PDF
+  },
   destination: {
     type: String, // Slug or Name of the destination this trip belongs to
     required: true,

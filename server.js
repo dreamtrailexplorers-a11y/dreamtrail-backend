@@ -20,6 +20,8 @@ import authRoutes from './routes/authRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import attractionRoutes from './routes/attractionRoutes.js';
 import subscriberRoutes from './routes/subscriberRoutes.js';
+import imageRoutes from './routes/imageRoutes.js';
+import customPageRoutes from './routes/customPageRoutes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 dotenv.config();
@@ -93,6 +95,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/attractions', attractionRoutes);
 app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/image', imageRoutes);
+app.use('/api/custom-pages', customPageRoutes);
 
 // Serve static files from uploads folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
