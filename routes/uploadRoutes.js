@@ -90,4 +90,41 @@ router.post('/finalize', express.json(), async (req, res) => {
   }
 });
 
+// POST /api/upload/chunk
+// Headers: x-upload-url, content-range
+// Body: Raw chunk bytes
+router.post('/chunk', express.raw({ type: 'application/octet-stream', limit: '5mb' }), async (req, res) => {
+  try {
+    const uploadUrl = req.headers['x-upload-url'];
+    const contentRange = req.headers['content-range'];
+
+    if (!uploadUrl || !contentRange) {
+      return res.status(400).json({ message: 'Missing upload URL or content range headers' });
+    }
+
+    const response = await fetch(uploadUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Length': req.body.length.toString(),
+        'Content-Range': contentRange
+      },
+      body: req.body
+    });
+
+    if (response.status === 308) {
+      // 308 means chunk was received, but file is incomplete
+      res.status(200).json({ status: 'incomplete' });
+    } else if (response.ok) {
+      // 200 or 201 means file is complete
+      const data = await response.json();
+      res.status(200).json({ status: 'complete', fileId: data.id });
+    } else {
+      res.status(response.status).json({ message: 'Chunk upload to Drive failed' });
+    }
+  } catch (error) {
+    console.error('Error proxying chunk:', error);
+    res.status(500).json({ message: 'Failed to upload chunk', error: error.message });
+  }
+});
+
 export default router;
