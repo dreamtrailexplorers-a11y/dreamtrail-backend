@@ -84,3 +84,64 @@ export const uploadToGoogleDrive = async (file, folderId) => {
     throw error;
   }
 };
+
+/**
+ * Initiates a resumable upload session with Google Drive.
+ * Returns the resumable upload URL (Location header) which the client can use to PUT the file.
+ */
+export const initiateResumableUpload = async (filename, mimetype, folderId) => {
+  try {
+    const { token } = await oauth2Client.getAccessToken();
+    
+    const fileMetadata = {
+      name: `${Date.now()}-${filename}`,
+      parents: folderId ? [folderId] : [],
+    };
+
+    const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'X-Upload-Content-Type': mimetype
+      },
+      body: JSON.stringify(fileMetadata)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to initiate upload: ${response.statusText}`);
+    }
+
+    const resumableUri = response.headers.get('Location');
+    return resumableUri;
+  } catch (error) {
+    console.error('Error initiating resumable upload:', error);
+    throw error;
+  }
+};
+
+/**
+ * Finalizes a resumable upload by making the file public and generating the view link.
+ */
+export const finalizeResumableUpload = async (fileId, mimetype) => {
+  try {
+    // Make the file publicly accessible
+    await drive.permissions.create({
+      fileId: fileId,
+      requestBody: {
+        role: 'reader',
+        type: 'anyone',
+      },
+    });
+
+    // Generate the direct view link
+    if (mimetype && mimetype.startsWith('image/')) {
+      return `https://lh3.googleusercontent.com/d/${fileId}=w1000`;
+    } else {
+      return `https://drive.google.com/uc?export=view&id=${fileId}`;
+    }
+  } catch (error) {
+    console.error('Error finalizing resumable upload:', error);
+    throw error;
+  }
+};

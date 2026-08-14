@@ -53,4 +53,40 @@ router.post('/', (req, res) => {
     }
   });
 });
+
+import { initiateResumableUpload, finalizeResumableUpload } from '../utils/googleDrive.js';
+
+// POST /api/upload/initiate
+// Body: { filename: 'test.pdf', mimetype: 'application/pdf' }
+router.post('/initiate', express.json(), async (req, res) => {
+  try {
+    const { filename, mimetype } = req.body;
+    if (!filename || !mimetype) {
+      return res.status(400).json({ message: 'Filename and mimetype are required' });
+    }
+    const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+    const uploadUrl = await initiateResumableUpload(filename, mimetype, folderId);
+    res.json({ uploadUrl });
+  } catch (error) {
+    console.error('Error initiating upload:', error);
+    res.status(500).json({ message: 'Failed to initiate upload', error: error.message });
+  }
+});
+
+// POST /api/upload/finalize
+// Body: { fileId: '...', mimetype: 'application/pdf' }
+router.post('/finalize', express.json(), async (req, res) => {
+  try {
+    const { fileId, mimetype } = req.body;
+    if (!fileId) {
+      return res.status(400).json({ message: 'File ID is required' });
+    }
+    const publicUrl = await finalizeResumableUpload(fileId, mimetype);
+    res.json({ url: publicUrl });
+  } catch (error) {
+    console.error('Error finalizing upload:', error);
+    res.status(500).json({ message: 'Failed to finalize upload', error: error.message });
+  }
+});
+
 export default router;
