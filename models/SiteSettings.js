@@ -114,6 +114,7 @@ const siteSettingsSchema = new mongoose.Schema({
   contactUsContent: { type: String, default: 'Get in touch with us...' },
   termsContent: { type: String, default: 'Terms and Conditions...' },
   privacyPolicyContent: { type: String, default: 'Privacy Policy...' },
+  cancellationContent: { type: String, default: 'Cancellation Policy...' },
   paymentDetailsContent: { type: String, default: 'Payment Options...' },
   
   // Footer
