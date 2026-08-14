@@ -166,11 +166,11 @@ const siteSettingsSchema = new mongoose.Schema({
   
   // Meet The Team Page
   meetTheTeam: {
-    heroTitle: { type: String, default: 'Meet the Team' },
-    heroSubtitle: { type: String, default: 'Dream Riders' },
-    heroText: { type: String, default: 'We are a group of passionate riders...' },
+    heroTitle: { type: String, default: '' },
+    heroSubtitle: { type: String, default: '' },
+    heroText: { type: String, default: '' },
     heroImage: { type: String, default: '' },
-    quoteText: { type: String, default: 'WHAT INSPIRED ME...' },
+    quoteText: { type: String, default: '' },
     teamMembers: { type: [TeamMemberSchema], default: [] }
   },
   

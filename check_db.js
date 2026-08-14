@@ -1,4 +1,10 @@
-import mongoose from " mongoose"; 
-mongoose.connect("mongodb://127.0.0.1:27017/dreamtrail")
-.then(() => mongoose.connection.db.collection("trips").find().sort({_id:-1}).limit(1).toArray()).then(d => 
-    { console.log("quickInfo is: ", d[0].quickInfo); process.exit(0); });
+import mongoose from 'mongoose';
+import SiteSettings from './models/SiteSettings.js';
+
+async function run() {
+  await mongoose.connect('mongodb://127.0.0.1:27017/dreamtrail');
+  const settings = await SiteSettings.findOne();
+  console.log(JSON.stringify(settings.meetTheTeam, null, 2));
+  process.exit();
+}
+run();
