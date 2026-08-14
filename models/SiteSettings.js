@@ -112,9 +112,9 @@ const siteSettingsSchema = new mongoose.Schema({
   },
   careersContent: { type: String, default: 'Join our team...' },
   contactUsContent: { type: String, default: 'Get in touch with us...' },
-  termsContent: { type: String, default: 'Terms and Conditions...' },
-  privacyPolicyContent: { type: String, default: 'Privacy Policy...' },
-  cancellationContent: { type: String, default: 'Cancellation Policy...' },
+  termsBlocks: { type: [PolicyBlockSchema], default: [] },
+  privacyPolicyBlocks: { type: [PolicyBlockSchema], default: [] },
+  cancellationBlocks: { type: [PolicyBlockSchema], default: [] },
   paymentDetailsContent: { type: String, default: 'Payment Options...' },
   
   // Footer
