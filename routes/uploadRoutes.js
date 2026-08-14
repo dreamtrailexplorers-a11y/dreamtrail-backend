@@ -65,7 +65,8 @@ router.post('/initiate', express.json(), async (req, res) => {
       return res.status(400).json({ message: 'Filename and mimetype are required' });
     }
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
-    const uploadUrl = await initiateResumableUpload(filename, mimetype, folderId);
+    const origin = req.headers.origin || 'https://dreamtrail-frontend.vercel.app';
+    const uploadUrl = await initiateResumableUpload(filename, mimetype, folderId, origin);
     res.json({ uploadUrl });
   } catch (error) {
     console.error('Error initiating upload:', error);

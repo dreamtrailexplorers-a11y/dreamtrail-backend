@@ -89,7 +89,7 @@ export const uploadToGoogleDrive = async (file, folderId) => {
  * Initiates a resumable upload session with Google Drive.
  * Returns the resumable upload URL (Location header) which the client can use to PUT the file.
  */
-export const initiateResumableUpload = async (filename, mimetype, folderId) => {
+export const initiateResumableUpload = async (filename, mimetype, folderId, origin) => {
   try {
     const { token } = await oauth2Client.getAccessToken();
     
@@ -103,7 +103,8 @@ export const initiateResumableUpload = async (filename, mimetype, folderId) => {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-        'X-Upload-Content-Type': mimetype
+        'X-Upload-Content-Type': mimetype,
+        'Origin': origin
       },
       body: JSON.stringify(fileMetadata)
     });
