@@ -47,13 +47,15 @@ const siteSettingsSchema = new mongoose.Schema({
       image: { type: String, default: '' },
       title: { type: String, default: '' },
       subtitle: { type: String, default: '' },
-      pillText: { type: String, default: '' }
+      pillText: { type: String, default: '' },
+      categoryLink: { type: String, default: '' }
     }],
     default: [{
       image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1600&q=80',
       title: 'Group Trips',
       subtitle: 'It\'s time for',
-      pillText: 'Join solo or bring your buddy'
+      pillText: 'Join solo or bring your buddy',
+      categoryLink: 'Group Tours'
     }]
   },
   

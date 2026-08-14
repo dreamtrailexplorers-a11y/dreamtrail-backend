@@ -49,7 +49,7 @@ const tripSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: String, // 'Flight Package', 'Tour Package', 'Group Trip', 'Honeymoon', 'Unique Experience'
+    type: String, // 'Motorcycle Tours', 'Group Tours', 'Winter Tours', 'Corporate Tours'
     required: true,
   },
   tag: {
