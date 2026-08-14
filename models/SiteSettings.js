@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+const PolicyBlockSchema = new mongoose.Schema({
+  blockType: { type: String, enum: ['title', 'subtitle', 'text', 'point'], required: true },
+  content: { type: String, required: true }
+}, { _id: false });
+
 const siteSettingsSchema = new mongoose.Schema({
   // Hero Section
   heroHeading: { type: String, default: 'Experiences for\nTourist Explorers' },
