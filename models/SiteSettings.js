@@ -5,6 +5,16 @@ const PolicyBlockSchema = new mongoose.Schema({
   content: { type: String, required: true }
 }, { _id: false });
 
+const TeamMemberSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  role: { type: String, required: true },
+  description: { type: String },
+  image: { type: String },
+  whatsapp: { type: String },
+  orderNumber: { type: String }, // e.g., "01", "02"
+  teamType: { type: String, enum: ['Ride Marshal', 'Back Office'], default: 'Ride Marshal' }
+});
+
 const siteSettingsSchema = new mongoose.Schema({
   // Hero Section
   heroHeading: { type: String, default: 'Experiences for\nTourist Explorers' },
@@ -122,25 +132,48 @@ const siteSettingsSchema = new mongoose.Schema({
   cancellationBlocks: { type: [PolicyBlockSchema], default: [] },
   paymentDetailsContent: { type: String, default: 'Payment Options...' },
   
-  // Footer
-  footerLinks: {
-    type: [{
-      label: { type: String, required: true },
-      url: { type: String, required: true }
-    }],
+  // Footer Links (Categorized)
+  footerToursIndia: {
+    type: [{ label: { type: String, required: true }, url: { type: String, required: true } }],
     default: [
-      { label: 'Home', url: '/' },
-      { label: 'Motorcycle Tours', url: '/tour-packages' },
-      { label: 'Group Tours', url: '/group-trips' },
-      { label: 'Creator', url: '/creator-trips' },
-      { label: 'Careers', url: '/careers' },
-      { label: 'About Us', url: '/about' },
-      { label: 'Contact Us', url: '/contact' },
-      { label: 'Terms & Conditions', url: '/terms' },
-      { label: 'Privacy Policy', url: '/privacy' },
-      { label: 'Payment Details', url: '/payment' }
+      { label: 'Ladakh', url: '/tour/ladakh' },
+      { label: 'Spiti', url: '/tour/spiti' },
+      { label: 'Zanskar', url: '/tour/zanskar' },
+      { label: 'Tawang', url: '/tour/tawang' }
     ]
   },
+  footerToursAsia: {
+    type: [{ label: { type: String, required: true }, url: { type: String, required: true } }],
+    default: [
+      { label: 'Bhutan', url: '/tour/bhutan' },
+      { label: 'Nepal', url: '/tour/nepal' }
+    ]
+  },
+  footerOtherLinks: {
+    type: [{ label: { type: String, required: true }, url: { type: String, required: true } }],
+    default: [
+      { label: 'Group Tours', url: '/group-trips' },
+      { label: 'Corporate Tours', url: '/corporate-tours' },
+      { label: 'Blogs', url: '/blogs' },
+      { label: 'Terms & Condition', url: '/terms' },
+      { label: 'Cancellation Policy', url: '/cancellation' },
+      { label: 'Privacy Policy', url: '/privacy' },
+      { label: 'About Us', url: '/about' },
+      { label: 'Meet The Team', url: '/meet-the-team' },
+      { label: 'Contact Us', url: '/contact' }
+    ]
+  },
+  
+  // Meet The Team Page
+  meetTheTeam: {
+    heroTitle: { type: String, default: 'Meet the Team' },
+    heroSubtitle: { type: String, default: 'Dream Riders' },
+    heroText: { type: String, default: 'We are a group of passionate riders...' },
+    heroImage: { type: String, default: '' },
+    quoteText: { type: String, default: 'WHAT INSPIRED ME...' },
+    teamMembers: { type: [TeamMemberSchema], default: [] }
+  },
+  
   copyrightText: { type: String, default: '© 2026 DreamTrail Experiences Private Limited. All rights reserved.' },
 }, { timestamps: true });
 
