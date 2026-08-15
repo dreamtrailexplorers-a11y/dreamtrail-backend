@@ -48,10 +48,6 @@ const tripSchema = new mongoose.Schema({
     type: String, // Slug or Name of the destination this trip belongs to
     required: true,
   },
-  footerLink: {
-    type: String,
-    default: '',
-  },
   category: {
     type: String, // 'Motorcycle Tours', 'Group Tours', 'Winter Tours', 'Corporate Tours'
     required: true,
