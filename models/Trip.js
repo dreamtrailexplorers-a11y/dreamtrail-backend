@@ -74,10 +74,10 @@ const tripSchema = new mongoose.Schema({
     subtitle: String,
     image: String
   }],
-  inclusions: [{ type: String }],
+  inclusions: [{ type: mongoose.Schema.Types.Mixed }],
   mapImage: { type: String, default: '' },
   tourHighlights: [{ type: String }],
-  exclusions: [{ type: String }],
+  exclusions: [{ type: mongoose.Schema.Types.Mixed }],
   amenities: [{ type: String }],
   aboutTrip: String,
   
