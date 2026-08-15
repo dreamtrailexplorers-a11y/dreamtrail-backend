@@ -134,7 +134,8 @@ const tripSchema = new mongoose.Schema({
     knowBeforeYouGo: [{ title: String, desc: String }],
     paymentPolicy: [{ title: String, desc: String }],
     termsAndConditions: [{ title: String, desc: String }],
-    cancellationAndRefundPolicy: [{ title: String, desc: String }]
+    cancellationAndRefundPolicy: [{ title: String, desc: String }],
+    generalNote: [{ title: String, desc: String }]
   },
   
   // CREATOR TRIP SPECIFIC FIELDS
