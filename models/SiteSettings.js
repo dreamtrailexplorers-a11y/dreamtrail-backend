@@ -102,6 +102,8 @@ const siteSettingsSchema = new mongoose.Schema({
     storyTitle: { type: String, default: 'Our Story' },
     storyText: { type: String, default: 'In 2009, a deep passion for the open road gave birth to Dream Riders...' },
     storyImage: { type: String, default: '' },
+    storyImage2: { type: String, default: '' },
+    storyImage3: { type: String, default: '' },
     
     communityTitle: { type: String, default: 'Join the Passionate Rider Community at Dream Riders Group' },
     communityText: { type: String, default: 'At Dream Riders Group, we believe that every journey begins with passion...' },
