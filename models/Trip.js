@@ -66,7 +66,9 @@ const tripSchema = new mongoose.Schema({
   itinerary: [{
     day: String,
     title: String,
-    desc: String,
+    desc: String,        // legacy field (kept for backward compat)
+    paragraphs: [String], // NEW: array of paragraph texts
+    points: [String],     // NEW: array of bullet points
     image: String
   }],
   attractions: [{
