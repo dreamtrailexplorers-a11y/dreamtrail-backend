@@ -1,11 +1,24 @@
 import express from 'express';
 import Booking from '../models/Booking.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 // We should protect this with admin auth middleware ideally, but for now we'll just get all
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
     const bookings = await Booking.find().populate('user', 'name email phone').sort({ createdAt: -1 });
+    res.json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Update booking status (for admin)
+
+// Get my bookings (for user)
+router.get('/my-bookings', authMiddleware, async (req, res) => {
+  try {
+    const bookings = await Booking.find({ user: req.user.id }).sort({ createdAt: -1 });
     res.json(bookings);
   } catch (error) {
     res.status(500).json({ message: error.message });

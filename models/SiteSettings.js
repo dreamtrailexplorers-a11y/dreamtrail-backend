@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+﻿import mongoose from 'mongoose';
 
 const PolicyBlockSchema = new mongoose.Schema({
   blockType: { type: String, enum: ['title', 'subtitle', 'text', 'point'], required: true },
@@ -16,6 +16,15 @@ const TeamMemberSchema = new mongoose.Schema({
 });
 
 const siteSettingsSchema = new mongoose.Schema({
+    // Pre-Booking & Reminders Settings
+  preBookingSettings: {
+    amount: { type: Number, default: 5000 },
+    reminderDaysLeft: { type: Number, default: 10 },
+    reminderTime1: { type: String, default: '10:00' },
+    reminderTime2: { type: String, default: '18:00' },
+    refundPolicyText: { type: String, default: 'Pre-booking amount is strictly non-refundable.' }
+  },
+
   // Hero Section
   heroHeading: { type: String, default: 'Experiences for\nTourist Explorers' },
   heroImages: { type: [String], default: ['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80', 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1920&q=80'] },
@@ -178,9 +187,10 @@ const siteSettingsSchema = new mongoose.Schema({
     teamMembers: { type: [TeamMemberSchema], default: [] }
   },
   
-  copyrightText: { type: String, default: '© 2026 DreamTrail Experiences Private Limited. All rights reserved.' },
+  copyrightText: { type: String, default: 'Â© 2026 DreamTrail Experiences Private Limited. All rights reserved.' },
 }, { timestamps: true });
 
 const SiteSettings = mongoose.model('SiteSettings', siteSettingsSchema);
 
 export default SiteSettings;
+

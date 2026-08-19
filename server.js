@@ -1,6 +1,7 @@
-import express from 'express';
+﻿import express from 'express';
 // Trigger restart 2
 import dotenv from 'dotenv';
+import './cron/reminderCron.js';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
@@ -25,6 +26,11 @@ import customPageRoutes from './routes/customPageRoutes.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 dotenv.config();
+
+
+
+import dns from 'dns';
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -118,3 +124,4 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 export default app;
+

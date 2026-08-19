@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+﻿import mongoose from 'mongoose';
 
 const bookingSchema = new mongoose.Schema({
   user: {
@@ -33,7 +33,7 @@ const bookingSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ['Pending', 'Paid', 'Failed'],
+    enum: ['Pending', 'Pre-Booked', 'Paid', 'Fully Paid', 'Failed', 'Cancelled'],
     default: 'Pending'
   },
   razorpayOrderId: {
@@ -41,6 +41,15 @@ const bookingSchema = new mongoose.Schema({
   },
   razorpayPaymentId: {
     type: String
+  },
+  paymentDetails: {
+    totalTripCost: Number,
+    preBookPaid: Number,
+    balanceDue: Number,
+    balancePaymentLinkId: String,
+    balancePaymentLinkUrl: String,
+    balancePaidAt: Date,
+    balancePaid: Number
   },
   // Extra booking details the user might fill out later
   travellerDetails: {
@@ -64,3 +73,4 @@ const bookingSchema = new mongoose.Schema({
 
 const Booking = mongoose.model('Booking', bookingSchema);
 export default Booking;
+
