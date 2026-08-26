@@ -1,56 +1,57 @@
 import express from 'express';
 import multer from 'multer';
-import { uploadToCloudinary } from '../utils/cloudinary.js';
+import cloudinary, { uploadToCloudinary } from '../utils/cloudinary.js';
 
 const router = express.Router();
-
-// Use memory storage to avoid read-only file system issues on Vercel
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
+// GET /api/upload/signature
+// Generates a signature for direct uploads from the frontend to Cloudinary.
+// This completely bypasses Vercel's 4.5MB payload limit!
+router.get('/signature', (req, res) => {
+  try {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const folder = 'dreamtrail';
+    
+    // The parameters that need to be signed
+    const paramsToSign = {
+      timestamp: timestamp,
+      folder: folder
+    };
+
+    const signature = cloudinary.utils.api_sign_request(
+      paramsToSign,
+      process.env.CLOUDINARY_API_SECRET
+    );
+
+    res.json({
+      signature,
+      timestamp,
+      folder,
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+      apiKey: process.env.CLOUDINARY_API_KEY
+    });
+  } catch (error) {
+    console.error("Signature generation error:", error);
+    res.status(500).json({ error: "Failed to generate signature" });
+  }
+});
+
 // POST /api/upload
+// Standard upload through backend (limited to 4.5MB by Vercel)
 router.post('/', (req, res) => {
-  console.log("✅ Upload route hit");
-
   upload.single('file')(req, res, async function (err) {
-
-    console.log("✅ Multer finished");
-
-    if (err) {
-      console.error("❌ Multer Upload error:", err);
-      return res.status(500).json({
-        message: 'Image upload failed on server',
-        error: err.message || err
-      });
-    }
-
-    console.log("📄 req.file:", req.file);
-
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
+    if (err) return res.status(500).json({ message: 'Image upload failed on server', error: err.message || err });
+    if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
 
     try {
-      console.log("🚀 Calling uploadToCloudinary...");
       const fileUrl = await uploadToCloudinary(req.file.buffer);
-      console.log("✅ Upload Success:", fileUrl);
       res.json({ url: fileUrl });
     } catch (uploadError) {
-      console.error(" Cloudinary Upload Error:", uploadError);
-      res.status(500).json({
-        message: 'Image upload to Cloudinary failed',
-        error: uploadError.message || uploadError
-      });
+      res.status(500).json({ message: 'Image upload to Cloudinary failed', error: uploadError.message || uploadError });
     }
   });
 });
-
-// Since we switched to Cloudinary, resumable uploads aren't strictly needed
-// But to prevent frontend errors if they use these endpoints, we'll keep placeholders
-// or handle them as simple uploads if possible.
-// Actually, Cloudinary handles chunked uploads via its own API, 
-// but for standard small files, the above endpoint is enough.
-// Let's just point `/initiate`, `/chunk`, `/finalize` to return standard URLs or errors if used.
-// A better way is to update the frontend to use `/api/upload` directly if it's not already.
 
 export default router;
