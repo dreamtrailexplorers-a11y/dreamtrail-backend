@@ -1,4 +1,4 @@
-﻿import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 const PolicyBlockSchema = new mongoose.Schema({
   blockType: { type: String, enum: ['title', 'subtitle', 'text', 'point'], required: true },
@@ -69,7 +69,7 @@ const siteSettingsSchema = new mongoose.Schema({
   },
   
   // Contact Info
-  address: { type: String, default: 'DreamTrail Experiences Pvt. Ltd.\n508, 3rd Eye Vision, IIM Road, Ahmedabad, Gujarat 380015' },
+  address: { type: String, default: 'DreamTrail Experiences \n508, 3rd Eye Vision, IIM Road, Ahmedabad, Gujarat 380015' },
   phone: { type: String, default: '90 99 599 331' },
   whatsappNumber: { type: String, default: '9099599331' },
   email: { type: String, default: 'hello@dreamtrail.com' },
@@ -102,7 +102,11 @@ const siteSettingsSchema = new mongoose.Schema({
       extraIntros: {
         type: [{
           title: { type: String, default: '' },
-          text: { type: String, default: '' }
+          text: { type: String, default: '' },
+          points: [{
+            title: { type: String, default: '' },
+            text: { type: String, default: '' }
+          }]
         }],
         default: []
       },
@@ -142,7 +146,28 @@ const siteSettingsSchema = new mongoose.Schema({
   contactUsContent: { type: String, default: 'Get in touch with us...' },
   termsBlocks: { type: [PolicyBlockSchema], default: [] },
   privacyPolicyBlocks: { type: [PolicyBlockSchema], default: [] },
-  cancellationBlocks: { type: [PolicyBlockSchema], default: [] },
+  cancellationSettings: {
+    tableSubtitle: { type: String, default: 'Policy on cancellations & deductions – domestic travel (Premium & Deluxe Services)' },
+    tableRows: {
+      type: [{ leftText: String, rightText: String }],
+      default: [
+        { leftText: 'Non-Returnable Amount', rightText: 'Registration Amount' },
+        { leftText: 'Within 54 to 31 Days Before Tour Commencement', rightText: '50% Forfeiture of Package Cost' },
+        { leftText: 'Less than 30 Days or Failure to Travel', rightText: 'No Refund Allowed' }
+      ]
+    },
+    middleSubtitle: { type: String, default: 'The GST amount is strictly non-refundable under any circumstances.' },
+    middleText: { type: String, default: 'The booking amount is strictly non-refundable. Additionally, the GST amount is non-refundable under any circumstances. Participants may cancel their registration/booking at any time, provided they adhere to the standard cancellation policy, and send a cancellation request via email prior to the commencement of the tour.' },
+    bottomSubtitle: { type: String, default: 'Standard booking, cancellation & refund policy' },
+    bottomBullets: {
+      type: [String],
+      default: [
+        'GST amount is non-refundable under any circumstance.',
+        'The registration/booking amount is non-refundable and will be forfeited. The remaining balance, after deducting the registration amount and GST, will be eligible for a refund. This refund will be processed within 30 working days upon confirmation from our side and once the amount qualifies for a refund.'
+      ]
+    },
+    redNote: { type: String, default: 'In the event of a no-show at the starting point for any reason, Dreamtrail Explorers will not be liable for refunding any amount paid.' }
+  },
   paymentDetailsContent: { type: String, default: 'Payment Options...' },
   
   // Footer Links (Categorized)
