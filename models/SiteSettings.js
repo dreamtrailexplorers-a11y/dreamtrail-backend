@@ -212,10 +212,112 @@ const siteSettingsSchema = new mongoose.Schema({
     teamMembers: { type: [TeamMemberSchema], default: [] }
   },
   
+  corporateTours: {
+    heroTitle: { type: String, default: 'CORPORATE ADVENTURE' },
+    heroSubtitle: { type: String, default: 'THE LEGACY OF DREAM RIDERS' },
+    heroImage: { type: String, default: '' },
+    
+    statsTitle: { type: String, default: 'Ride Together,\nLead Together' },
+    statsText: { type: String, default: 'Discover a new perspective on team building...' },
+    stats: {
+      type: [{
+        number: { type: String },
+        label: { type: String }
+      }],
+      default: [
+        { number: '100+', label: 'Corporate Trips' },
+        { number: '11+', label: 'Years of Legacy' },
+        { number: '15+', label: 'Destinations' },
+        { number: '90%', label: 'Client Retention' }
+      ]
+    },
+    
+    featuresTitle: { type: String, default: 'Corporate Travel, Reimagined' },
+    featuresText: { type: String, default: 'From navigating unpredictable routes to ensuring your team\'s safety, our experts are there every step of the way—so you can focus on the ride, the experience, and creating unforgettable memories.' },
+    features: {
+      type: [{
+        title: { type: String },
+        text: { type: String },
+        icon: { type: String }
+      }],
+      default: [
+        { title: 'End-to-End Safety', text: 'Your safety comes first, every mile of the journey. From detailed pre-ride briefings and quality safety gear...', icon: 'FiShield' },
+        { title: 'Fully Customised Experiences', text: 'Your journey should be as unique as your team. From group size and travel style to interests, pace, and timeline...', icon: 'FiSliders' },
+        { title: 'Dedicated On-Ground Support', text: 'Our experienced operations team stays with you throughout the journey, providing reliable on-ground assistance...', icon: 'FiUsers' },
+        { title: 'Premium Stays & Meals', text: 'Handpicked hotels, boutique stays, homestays, and camps offering the perfect blend of comfort, character...', icon: 'FiCoffee' },
+        { title: 'Signature Adventures', text: 'Professional photography and videography that captures the spirit of every journey — from breathtaking landscapes...', icon: 'FiCamera' },
+        { title: 'Documentation & Branding', text: 'We take care of the planning, logistics and experiences—so you can focus on the journey.', icon: 'FiFileText' }
+      ]
+    },
+    
+    offeringsTitle: { type: String, default: 'One Platform, Every Needs.' },
+    offeringsText: { type: String, default: 'From high-altitude motorcycle expeditions to carefully crafted leisure holidays, Dreamtrail Explorers brings every kind of travel experience under one roof.' },
+    offerings: {
+      type: [{
+        title: { type: String },
+        text: { type: String },
+        image: { type: String }
+      }],
+      default: [
+        { title: 'TEAM OUTINGS', text: 'Weekend Getaways for Better Connections', image: '' },
+        { title: 'INCENTIVE TRAVEL', text: 'Reward Achievements with Experiences Worth Remembering.', image: '' },
+        { title: 'MICE', text: 'Meetings That Inspire. Destinations That Deliver.', image: '' },
+        { title: 'SIGNATURE ADVENTURES', text: 'Built on Roads. Bonded by Adventure.', image: '' }
+      ]
+    },
+    
+    galleryTitle: { type: String, default: 'Where Will Your Team Ride?' },
+    galleryText: { type: String, default: 'Turn your next corporate getaway into more than just a trip. With Dreamtrail Explorers, experience thoughtfully crafted journeys that build stronger teams and create memories that last.' },
+    galleryImages: { type: [String], default: [] },
+    
+    videoUrl: { type: String, default: 'https://www.youtube.com/embed/XXXXXXX' },
+    
+    stepsTitle: { type: String, default: 'From Enquiry to Epic Ride' },
+    stepsText: { type: String, default: 'Our five-step process takes you from planning to riding...' },
+    steps: {
+      type: [{
+        title: { type: String },
+        text: { type: String }
+      }],
+      default: [
+        { title: 'Share Requirements', text: 'Tell us your team size, dates, budget, and dream destination.' },
+        { title: 'Custom Proposal', text: 'We design a bespoke itinerary and detailed quote within 48 hours.' },
+        { title: 'Confirm & Book', text: 'Review, refine, approve — and lock in your dates with a simple advance.' },
+        { title: 'Pre-Ride Briefing', text: 'Safety orientation, gear check, route walkthrough for every rider.' },
+        { title: 'Ride & Celebrate', text: 'Your team rides, bonds, and returns with stories for a lifetime.' }
+      ]
+    },
+    
+    testimonialsTitle: { type: String, default: 'What Teams Say About Us' },
+    testimonials: {
+      type: [{
+        text: { type: String },
+        name: { type: String },
+        designation: { type: String }
+      }],
+      default: [
+        { text: 'An incredible experience for our entire team...', name: 'John Doe', designation: 'CEO, Tech Corp' }
+      ]
+    },
+    
+    formTitle: { type: String, default: 'Let\'s Plan Your Team\'s Adventure' },
+    formText: { type: String, default: 'Connect with our corporate travel experts to customize a journey for your team.' },
+    formPoints: {
+      type: [{
+        text: { type: String }
+      }],
+      default: [
+        { text: 'Custom itineraries for all group sizes' },
+        { text: 'End-to-end logistics management' },
+        { text: 'Dedicated trip coordinators' },
+        { text: 'Flexible payment options' }
+      ]
+    }
+  },
+  
   copyrightText: { type: String, default: 'Â© 2026 DreamTrail Experiences Private Limited. All rights reserved.' },
 }, { timestamps: true });
 
 const SiteSettings = mongoose.model('SiteSettings', siteSettingsSchema);
 
 export default SiteSettings;
-

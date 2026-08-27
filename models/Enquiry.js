@@ -6,6 +6,12 @@ const EnquirySchema = new mongoose.Schema({
   email: { type: String },
   date: { type: String },
   travellers: { type: Number },
+  teamSize: { type: String },
+  budget: { type: String },
+  trip: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Trip'
+  },
   message: { type: String },
   tripTitle: { type: String, required: true },
   tripRoute: { type: String },
