@@ -8,6 +8,8 @@ const EnquirySchema = new mongoose.Schema({
   travellers: { type: Number },
   teamSize: { type: String },
   budget: { type: String },
+  companyName: { type: String },
+  tripType: { type: String },
   trip: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Trip'
