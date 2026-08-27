@@ -302,6 +302,10 @@ const siteSettingsSchema = new mongoose.Schema({
     
     formTitle: { type: String, default: 'Let\'s Plan Your Team\'s Adventure' },
     formText: { type: String, default: 'Connect with our corporate travel experts to customize a journey for your team.' },
+    contactPhone: { type: String, default: '+91 98980 36338\n+91 98985 54465' },
+    contactWhatsapp: { type: String, default: '+91 98985 54465' },
+    contactEmail: { type: String, default: 'info@dreamridersmototouring.com' },
+    contactLocation: { type: String, default: 'Ahmedabad, Gujarat, India' },
     formPoints: {
       type: [{
         text: { type: String }
