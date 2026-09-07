@@ -1,5 +1,6 @@
 import cron from 'node-cron';
 import moment from 'moment';
+import mongoose from 'mongoose';
 import SiteSettings from '../models/SiteSettings.js';
 import Booking from '../models/Booking.js';
 import Razorpay from 'razorpay';
@@ -7,6 +8,11 @@ import Razorpay from 'razorpay';
 // This job runs every minute to check if the current time matches the admin's configured reminder times.
 cron.schedule('* * * * *', async () => {
   try {
+    // Check if MongoDB is connected to avoid buffering timeout spam if connection fails
+    if (mongoose.connection.readyState !== 1) {
+      return;
+    }
+
     const settings = await SiteSettings.findOne();
     if (!settings || !settings.preBookingSettings) return;
 
