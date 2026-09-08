@@ -70,8 +70,8 @@ const siteSettingsSchema = new mongoose.Schema({
   
   // Contact Info
   address: { type: String, default: 'DreamTrail Experiences \n508, 3rd Eye Vision, IIM Road, Ahmedabad, Gujarat 380015' },
-  phone: { type: String, default: '90 99 599 331' },
-  whatsappNumber: { type: String, default: '9099599331' },
+  phone: { type: String, default: '98751 29341' },
+  whatsappNumber: { type: String, default: '9875129341' },
   email: { type: String, default: 'hello@dreamtrail.com' },
   
   // Social Media
