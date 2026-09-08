@@ -30,8 +30,7 @@ const seedFooterLinks = async () => {
           { label: 'Tawang', url: '/tour/tawang' }
         ],
         footerToursAsia: [
-          { label: 'Bhutan', url: '/tour/bhutan' },
-          { label: 'Nepal', url: '/tour/nepal' }
+          { label: 'Bhutan', url: '/tour/bhutan' }
         ],
         footerOtherLinks: [
           { label: 'Group Tours', url: '/group-trips' },
@@ -56,8 +55,7 @@ const seedFooterLinks = async () => {
         { label: 'Tawang', url: '/tour/tawang' }
       ];
       settings.footerToursAsia = [
-        { label: 'Bhutan', url: '/tour/bhutan' },
-        { label: 'Nepal', url: '/tour/nepal' }
+        { label: 'Bhutan', url: '/tour/bhutan' }
       ];
       settings.footerOtherLinks = [
         { label: 'Group Tours', url: '/group-trips' },
