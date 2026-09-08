@@ -11,7 +11,8 @@ const blogSchema = new mongoose.Schema({
   },
   authorAvatar: {
     type: String,
-    required: true,
+    required: false,
+    default: '',
   },
   readTime: {
     type: String,
@@ -19,7 +20,8 @@ const blogSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    required: false,
+    default: '',
   },
   excerpt: {
     type: String,

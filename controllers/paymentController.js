@@ -1,4 +1,4 @@
-﻿import Razorpay from 'razorpay';
+import Razorpay from 'razorpay';
 import SiteSettings from '../models/SiteSettings.js';
 import Booking from '../models/Booking.js';
 import crypto from 'crypto';
@@ -173,10 +173,13 @@ export const verifyBalancePayment = async (req, res) => {
       if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
       
       // Update booking to fully paid
+      const amountPaid = (booking.paymentDetails?.balanceDue > 0)
+        ? booking.paymentDetails.balanceDue 
+        : (booking.totalAmount - (booking.paymentDetails?.preBookPaid || 0));
       booking.paymentStatus = 'Fully Paid';
+      booking.paymentDetails.balancePaid = amountPaid;
       booking.paymentDetails.balanceDue = 0;
-      booking.paymentDetails.balancePaid = booking.paymentDetails.balanceDue;
-      booking.paymentDetails.balancePaidAt = new Date(); // or keep track of split
+      booking.paymentDetails.balancePaidAt = new Date();
       await booking.save();
       
       res.status(200).json({ success: true, message: 'Balance payment verified successfully' });

@@ -319,7 +319,8 @@ const siteSettingsSchema = new mongoose.Schema({
     }
   },
   
-  copyrightText: { type: String, default: 'Â© 2026 DreamTrail Experiences Private Limited. All rights reserved.' },
+  copyrightText: { type: String, default: '© 2026 Dreamtrail Explorers. All rights reserved.' },
+  madeWithText: { type: String, default: 'Made with ❤️ in India 🇮🇳' },
 }, { timestamps: true });
 
 const SiteSettings = mongoose.model('SiteSettings', siteSettingsSchema);
