@@ -19,9 +19,9 @@ const siteSettingsSchema = new mongoose.Schema({
     // Pre-Booking & Reminders Settings
   preBookingSettings: {
     amount: { type: Number, default: 5000 },
-    reminderDaysLeft: { type: Number, default: 10 },
-    reminderTime1: { type: String, default: '10:00' },
-    reminderTime2: { type: String, default: '18:00' },
+    
+    
+    
     refundPolicyText: { type: String, default: 'Pre-booking amount is strictly non-refundable.' }
   },
 
