@@ -48,21 +48,24 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-export default router;
-
 // Send Payment Reminder Email (Admin)
 router.post('/:id/send-reminder', async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id).populate('user', 'name email phone');
-    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+    if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
     
-    const success = await sendPaymentReminder(booking);
-    if (success) {
-      res.json({ success: true, message: 'Reminder sent successfully' });
+    const result = await sendPaymentReminder(booking);
+    if (result && result.success) {
+      res.json({ success: true, message: result.message });
     } else {
-      res.status(500).json({ success: false, message: 'Failed to send reminder email. Check SMTP credentials.' });
+      res.status(400).json({ 
+        success: false, 
+        message: result?.message || 'Failed to send reminder email. Check SMTP credentials.' 
+      });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 });
+
+export default router;
